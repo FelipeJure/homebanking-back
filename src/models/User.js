@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    sequelize.define('users', {
+    sequelize.define('user', {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -9,6 +9,11 @@ module.exports = (sequelize) => {
         lastName: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        identity: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true
         },
         email: {
             type: DataTypes.STRING,
@@ -21,11 +26,5 @@ module.exports = (sequelize) => {
             allowNull: false,
             unique: true
         },
-// ver si es compatible ya que donde dice null, deberia ir la longitud del numero
-        money: {
-            type: DataTypes.FLOAT(null,2),
-            allowNull: false,
-            defaultValue: 0
-        }
     });
 };
