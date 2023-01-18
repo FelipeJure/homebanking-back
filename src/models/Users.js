@@ -2,7 +2,11 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
     sequelize.define('users', {
-        username: {
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        lastName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -19,7 +23,9 @@ module.exports = (sequelize) => {
         },
 // ver si es compatible ya que donde dice null, deberia ir la longitud del numero
         money: {
-            type: DataTypes.FLOAT(null,2)
+            type: DataTypes.FLOAT(null,2),
+            allowNull: false,
+            defaultValue: 0
         }
     });
 };
