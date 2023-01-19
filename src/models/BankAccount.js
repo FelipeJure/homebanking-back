@@ -7,12 +7,11 @@ module.exports = (sequelize) => {
             type: DataTypes.ENUM(['currentAccount', 'savingAccount']),
             allowNull: false
         },
-        typeOfMoney: {
-            type: DataTypes.STRING,
-            defaultValue: 'euros'
+        IBAN: {
+            type: DataTypes.STRING
         },
 // ver si es compatible ya que donde dice null, deberia ir la longitud del numero
-        money: {
+        amount: {
             type: DataTypes.FLOAT(null,2),
             defaultValue: 0
         }
