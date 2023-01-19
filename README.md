@@ -26,6 +26,9 @@ Esta tabla cuenta con:
 - IBAN (que es una clave unica que identifica al banco y a la cuenta, que en esta base de datos va a ser un numero autoincremental pero deberia ser un IBAN valido para el pais)
 - fecha de creada.
 - foreign key (FK) correspondiente al id del usuario a la cual va a estar relacionada esa cuenta.
+En cuanto a las relaciones, la cuenta bancaria va a presentar una relacion de uno a muchos con las siguientes tablas:
+- Prestamos: ya que una cuenta puede recibir muchos prestamos pero un prestamo va a transferirse a una sola cuenta.
+- Historial de pagos: ya que una cuenta puede recibir varios pagos, pero un pago va a transferirse a una sola cuenta.
 
 ### Prestamo
 
