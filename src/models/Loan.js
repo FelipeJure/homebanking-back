@@ -53,5 +53,8 @@ module.exports = (sequelize) => {
                 return this.totalDue / period;
             },
         },
+    },
+    { 
+        timestamps: false,
     });
 };
