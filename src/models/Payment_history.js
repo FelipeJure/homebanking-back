@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    sequelize.define('bankAccount', {
-        // puede ser unicamente cuenta corriente o caja de ahorros
+    sequelize.define('loan', {
+        // prestamo
         type: {
             type: DataTypes.ENUM(['currentAccount', 'savingAccount']),
             allowNull: false
@@ -16,11 +16,5 @@ module.exports = (sequelize) => {
             type: DataTypes.FLOAT(null,2),
             defaultValue: 0
         }
-    },
-    { 
-        timestamps: true,
-        createdAt: "created_date", // createdAt va a aparecer como created_date
-        updatedAt: false, // no va a aparecer updatedAt
-    }
-    );
+    });
 };
