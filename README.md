@@ -49,6 +49,5 @@ Esta tabla cuenta con:
 
 Aqui se puede ver el diagrama de la base de datos
 ![Banner](/homebanking-back/images/Diagrama%20base%20de%20datos.drawio.png)
-<img src='/images/Diagrama%20base%20de%20datos.drawio.png' alt='nada' />
 
 Ademas ...
