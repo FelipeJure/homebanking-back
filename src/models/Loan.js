@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
         },
         // interest es la tasa de interes que pone el banco (se debe poner en porcentaje sin el signo %)
         interest: {
-            type: DataTypes.FLOAT(null,2),
+            type: DataTypes.NUMERIC(5, 2),
             defaultValue: 0
         },
         request: {
@@ -55,6 +55,8 @@ module.exports = (sequelize) => {
         },
     },
     { 
-        timestamps: false,
+        timestamps: true,
+        createdAt: "request", // createdAt va a aparecer como request
+        updatedAt: false, // updatedAt no va a aparecer
     });
 };

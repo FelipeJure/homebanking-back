@@ -1,20 +1,19 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    sequelize.define('bankAccount', {
+    sequelize.define('bank_account', {
         // puede ser unicamente cuenta corriente o caja de ahorros
         type: {
-            type: DataTypes.ENUM(['currentAccount', 'savingAccount']),
-            allowNull: false
+            type: DataTypes.ENUM('current_account', 'saving_account'),
+            allowNull: false,
+            defaultValue: 'current_account'
         },
         IBAN: {
-            type: DataTypes.STRING,
-            unique: true,
-            autoIncrement: true
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
         },
-// ver si es compatible ya que donde dice null, deberia ir la longitud del numero
         amount: {
-            type: DataTypes.FLOAT(null,2),
+            type: DataTypes.NUMERIC(10,2),
             defaultValue: 0
         }
     },

@@ -29,34 +29,34 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 
-const { BankAccount, Loan, Payment_history, User } = sequelize.models
+const { Bank_account, Loan, Payment_history, User } = sequelize.models
 
 // Aca vienen las relaciones
 
-// relacion entre User y BankAccount, donde un usario puede tener muchas cuentas bancarias,
+// relacion entre User y Bank_account, donde un usario puede tener muchas cuentas bancarias,
 // pero una cuenta bancaria solo pertenece a un usuario.
-User.hasMany(BankAccount);
-BankAccount.belongsTo(User);
+User.hasMany(Bank_account);
+Bank_account.belongsTo(User);
 
 // relacion entre User y Loan, donde un usario puede tener muchos prestamos,
 // pero un prestamo va a corresponder a un usuario.
 User.hasMany(Loan);
 Loan.belongsTo(User);
 
-// relacion entre BankAccount y Loan, donde una cuenta puede tener muchos prestamos,
+// relacion entre Bank_account y Loan, donde una cuenta puede tener muchos prestamos,
 // pero un prestamo va a transferir el dinero a una cuenta.
-BankAccount.hasMany(Loan);
-Loan.belongsTo(BankAccount);
+Bank_account.hasMany(Loan);
+Loan.belongsTo(Bank_account);
 
 // relacion entre User y Payment_history, donde un usario puede tener muchos pagos,
 // pero un pago va a ser generado por un usuario.
 User.hasMany(Payment_history);
 Payment_history.belongsTo(User);
 
-// relacion entre BankAccount y Payment_history, donde una cuenta puede recibir muchos pagos,
+// relacion entre Bank_account y Payment_history, donde una cuenta puede recibir muchos pagos,
 // pero un pago va a ser transferido a una sola cuenta.
-BankAccount.hasMany(Payment_history);
-Payment_history.belongsTo(BankAccount);
+Loan.hasMany(Payment_history);
+Payment_history.belongsTo(Loan);
 
 
 module.exports = {
