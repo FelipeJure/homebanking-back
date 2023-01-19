@@ -9,7 +9,8 @@ module.exports = (sequelize) => {
         },
         IBAN: {
             type: DataTypes.STRING,
-            unique: true
+            unique: true,
+            autoIncrement: true
         },
 // ver si es compatible ya que donde dice null, deberia ir la longitud del numero
         amount: {
