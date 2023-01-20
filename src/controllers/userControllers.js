@@ -7,15 +7,17 @@ const get_user = async (req,res) => {
     try{
         const { email } = req.params
         if(!email) return res.status(404).send({message: 'Email no recibido'})
-        
+        const true_email = verify_email(email)
+        if(!true_email) return res.status(404).send({message: 'Debe enviar un email valido'})
+
         const user = await User.findOne({
             where: {
                 email
             }
         })
 
-        if(user.hasOwnProperty("dataValues")) return res.send(user)
-        return res.status(404).send({message: 'Usuario no encontrado'})
+        if(!user) return res.status(404).send({message: 'Usuario no encontrado'})
+        return res.send(user)
     }
     catch (error) {
         console.log(error)
@@ -75,7 +77,8 @@ const update_user = async (req, res, next) => {
         modifica esa respectiva propiedad del usuario pero si no lo encuentra envia un 
         error 404 con un mensaje que dice "El usuario no existe, verifica los datos enviados"*/
         if(user){
-            [telephone, address].forEach(value => value && (user.value = value))
+            if(telephone) user.telephone = telephone
+            if(address) user.address = address
             await user.save()
             return res.send(user)
         }
