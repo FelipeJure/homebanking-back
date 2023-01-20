@@ -30,7 +30,7 @@ const add_to_DB = async () => {
     await Loan.create({
         amount: 3455,
         period: 24,
-        interest: 15.6666,
+        interest: 15.66,
         status: "under review",
         userId: 1,
         bankAccountId: 1

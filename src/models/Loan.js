@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+const { right_number } = require('../controllers/helpers');
 
 module.exports = (sequelize) => {
     // prestamo
@@ -14,11 +15,8 @@ module.exports = (sequelize) => {
         },
         // interest es la tasa de interes que pone el banco (se debe poner en porcentaje sin el signo %)
         interest: {
-            type: DataTypes.NUMERIC(5, 2),
+            type: DataTypes.FLOAT,
             defaultValue: 0
-        },
-        request: {
-            type: DataTypes.DATE
         },
         accepted: {
             type: DataTypes.DATE
@@ -31,7 +29,8 @@ module.exports = (sequelize) => {
             cancelled: puede ser cuando el usuario paga todas las cuotas del prestamo, o cuando esta under review y se arrepiente del prestamo.
         */
         status: {
-            type: DataTypes.ENUM(['under review', 'accepted','in process', 'completed', 'cancelled'])
+            type: DataTypes.ENUM(['under review', 'accepted','in process', 'completed', 'cancelled']),
+            defaultValue: 'under review'
         },
         // collect es un array de fechas en las que debe pagar cada cuota
         collect: {
@@ -42,7 +41,8 @@ module.exports = (sequelize) => {
         totalDue: {
             type: DataTypes.VIRTUAL,
             get() {
-                return this.amount * (this.interest/100 + 1);
+                const due = this.amount * (this.interest/100 + 1)
+                return right_number(due);
             },
         },
         // installments son las cuotas mensuales que debe pagar el usuario
@@ -50,7 +50,8 @@ module.exports = (sequelize) => {
         installments: {
             type: DataTypes.VIRTUAL,
             get() {
-                return this.totalDue / period;
+                const installment = this.totalDue / this.period
+                return right_number(installment);
             },
         },
     },
