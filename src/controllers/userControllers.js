@@ -6,9 +6,9 @@ const { verify_string, verify_email } = require ('./helpers.js')
 const get_user = async (req,res) => {
     try{
         const { email } = req.params
-        if(!email) return res.status(404).send({message: 'Email no recibido'})
+        if(!email) return res.status(404).send({message: 'You have to send an email'})
         const true_email = verify_email(email)
-        if(!true_email) return res.status(404).send({message: 'Debe enviar un email valido'})
+        if(!true_email) return res.status(404).send({message: 'Invalid email'})
 
         const user = await User.findOne({
             where: {
@@ -16,7 +16,7 @@ const get_user = async (req,res) => {
             }
         })
 
-        if(!user) return res.status(404).send({message: 'Usuario no encontrado'})
+        if(!user) return res.status(404).send({message: 'User not found'})
         return res.send(user)
     }
     catch (error) {
@@ -32,9 +32,9 @@ const create_user = async (req, res, next) => {
             address, birth_date, password } = req.body
         // primero verifico que todos los datos existan y sean de tipo string, sino mando un error
         const every_strings = verify_string(name, last_name, telephone, identity, address, birth_date, password)
-        if(!every_strings) return res.status(404).send({message: 'Error en el formato de los datos, solo acepta string y debe enviar todos los datos'})
+        if(!every_strings) return res.status(404).send({message: 'Error in the data format, only accepts string and must send all data.'})
         const true_email = verify_email(email)
-        if(!true_email) return res.status(404).send({message: 'Debe enviar un email valido'})
+        if(!true_email) return res.status(404).send({message: 'Invalid email'})
 
         // verifica que no haya ningun usuario con ese email o identity, si existe, devuelve un error
         const existentUser = await User.findOne({
@@ -43,7 +43,7 @@ const create_user = async (req, res, next) => {
             }
         })
         if(existentUser) {
-            return res.status(404).send({message: 'Email o DNI ya ingresado en base de datos'})
+            return res.status(404).send({message: 'Email or identity already exist'})
         }
         const user = await User.create({
             identity, 
@@ -56,7 +56,7 @@ const create_user = async (req, res, next) => {
             password
         });
         if (user) return res.send(user)
-        else return res.send({message: 'El usuario que intentas crear ya existe'})
+        else return res.send({message: 'The user already exist'})
     }
     catch (error) {
         console.log(error)
@@ -68,8 +68,8 @@ const update_user = async (req, res, next) => {
         const { telephone, address, id } = req.body
         const received = [telephone, address].filter(value => value !== undefined)
         const every_strings = verify_string(...received)
-        if(!every_strings) return res.status(404).send({message: 'Error en el formato de los datos, solo acepta string'})
-        if(!id) return res.status(404).send({message: 'Error, no se obtuvo el id del usuario'})
+        if(!every_strings) return res.status(404).send({message: 'Error in the data format, only accepts string'})
+        if(!id) return res.status(404).send({message: 'User id not found'})
         // busca el usuario por id
         const user = await User.findByPk(id)
         /* 
@@ -82,7 +82,7 @@ const update_user = async (req, res, next) => {
             await user.save()
             return res.send(user)
         }
-        else return res.status(404).send({message: "El usuario no existe, verifica los datos enviados"})
+        else return res.status(404).send({message: "The user doesn't exist"})
     }
     catch (error) {
         console.log(error)

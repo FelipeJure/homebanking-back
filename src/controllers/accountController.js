@@ -7,13 +7,13 @@ const { Bank_account } = require ('../db.js');
 const getAccounts = async (req, res) => {
     try{
         const { userId } = req.params
-        if(!userId) return res.status(404).send({message: 'Falta el id del usuario'})
+        if(!userId) return res.status(404).send({message: 'You have to send the userId'})
         const accounts = await Bank_account.findAll({
             where:{
                 userId
             }
         })
-        if(!accounts.length) return res.status(404).send({message: 'El usuario no tiene ninguna cuenta creada'})
+        if(!accounts.length) return res.status(404).send({message: "This user don't have any accounts"})
         // se mandan solo las cuentas activas
         const activeAccounts = accounts.filter(acc => acc.status === 'active')
         return res.status(200).send(activeAccounts)
@@ -29,8 +29,8 @@ const getAccounts = async (req, res) => {
 const createAccount = async (req, res, next) => {
     try{
         const { type, id } = req.body
-        if(!id) return res.status(404).send({message: 'Falta el id del usuario'})
-        if(type !== 'current_account' && type !== 'saving_account') return res.status(404).send({message: 'Tipo de cuenta no valida'})
+        if(!id) return res.status(404).send({message: 'You have to send the userId'})
+        if(type !== 'current_account' && type !== 'saving_account') return res.status(404).send({message: 'Invalid account'})
         const account = await Bank_account.create({
                 type,
                 userId: id
@@ -47,12 +47,12 @@ const createAccount = async (req, res, next) => {
 const deleteAccount = async (req,res) => {
     try{
         const id  = req.params.accountId
-        if(!id) return res.status(404).send({message: 'Especificar id de la cuenta'})
+        if(!id) return res.status(404).send({message: 'You have to send the accountId'})
         const account = await Bank_account.findByPk(id);
-        if(!account) return res.status(404).send({message: 'Cuenta no encontrada'})
+        if(!account) return res.status(404).send({message: 'Account not found'})
         account.status = 'deleted'
         await account.save()
-        return res.status(200).send({message: 'Cuenta borrada con exito'})
+        return res.status(200).send({message: 'Account saccesfully deleted'})
     }
     catch (err) {
         console.log(err)

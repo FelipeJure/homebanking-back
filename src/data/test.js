@@ -11,6 +11,24 @@ const user = {
     password: 'chicha'
 }
 
+const payments = [
+    {
+        amount: 1000,
+        destination: "IBAN de otra cuenta",
+        userId: 1
+    },
+    {
+        amount: 765,
+        destination: "IBAN de otra cuenta",
+        userId: 1
+    },    {
+        amount: 100,
+        destination: "loan",
+        userId: 1,
+        loanId: 1
+    },
+]
+
 const add_to_DB = async () => {
     await User.create({
         name : user.name,
@@ -35,10 +53,7 @@ const add_to_DB = async () => {
         userId: 1,
         bankAccountId: 1
     })
-    await Payment_history.create({
-        amount: 12345678.88777,
-        destination: "IBAN de otra cuenta"
-    })
+    await Payment_history.bulkCreate(payments)
 }
 
 module.exports = { add_to_DB }

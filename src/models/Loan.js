@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
             cancelled: puede ser cuando el usuario paga todas las cuotas del prestamo, o cuando esta under review y se arrepiente del prestamo.
         */
         status: {
-            type: DataTypes.ENUM(['under review', 'accepted', 'completed', 'cancelled']),
+            type: DataTypes.ENUM(['under review', 'accepted', 'completed', 'canceled']),
             defaultValue: 'under review'
         },
         // collect es la fecha en las que debe pagar cada cuota
