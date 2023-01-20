@@ -1,5 +1,3 @@
-// aqui van a ir los datos de la app
-
 const express = require('express');
 // const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');

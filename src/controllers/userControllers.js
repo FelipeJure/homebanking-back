@@ -1,13 +1,11 @@
 const { User } = require ('../db.js');
 
-
 // crea un usuario, pasando por body el nombre, apellido, DNI, telefono, email, 
 // direccion, fecha de nacimiento y contraseña.
 async function createUser(req, res, next) {
     try{
-        console.log(req.body)
-    const { name, last_name, email, telephone, identity, 
-        address, birth_date, password } = req.body
+        const { name, last_name, email, telephone, identity, 
+            address, birth_date, password } = req.body
 
         const [user, created] = await User.findOrCreate({
             where: { identity },

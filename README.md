@@ -53,4 +53,11 @@ Esta tabla cuenta con:
 Aqui se puede ver el diagrama de la base de datos
 ![Banner](/homebanking-back/images/Diagrama%20base%20de%20datos.drawio.png)
 
-Ademas ...
+## Rutas
+
+Hay rutas para las diferentes tablas.
+
+## Usuarios
+
+Crear un usuario: para esto se manda un POST la ruta /user/create, donde se va a pasar por body los datos necesarios para crear un usuario que son name, last_name, address, email, telephone, birth_date, password y el DNI/NIE que seria identity.
+Esta ruta devuelve el mensaje de "Usuario creado con exito" o de "El usuario que intentas crear ya existe" en el caso que ya exista un usuario con ese identity ya que es el campo que se comprueba.
