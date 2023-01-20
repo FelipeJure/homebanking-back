@@ -1,5 +1,5 @@
 const { Loan, User, Bank_account } = require ('../db.js');
-const { right_number, verify_number, verify_integer} = require('./helpers');
+const { right_number, verify_number, verify_integer, next_month } = require('./helpers');
 
 // se solicita el prestamo pasando por body el monto, periodo, tasa de interes, id del
 // usuario y el id de la cuenta bancaria a la que se va a depositar ese dinero
@@ -37,13 +37,29 @@ const request_loan = async (req,res) => {
     }
 }
 
-const accept_loan = (req, res) => {
+const accept_loan = async (req, res) => {
     try {
-
+    /* esta ruta deberia acceder solo el administrador, por lo que se deberia agregar
+        una propiedad al usuario que lo identifique como administrador y pueda ser validada
+        en esta funcion 
+    */
+        const id = req.params.loanId
+        if(!id) return res.status(404).send({message: 'Debe enviar el id del prestamo'})
+        const found_loan = await Loan.findByPk(id)
+        if(!found_loan) return res.status(404).send({message: 'El prestamo no se encuentra en la base de datos'})
+        const today = new Date()
+        found_loan.status = 'accepted';
+        found_loan.collect = next_month(today)
+        await found_loan.save()
+        console.log(found_loan.collect)
+        const account = await Bank_account.findByPk(found_loan.bankAccountId)
+        account.amount = account.amount - (-found_loan.amount)
+        await account.save()
+        return res.status(200).send(account)
     }
     catch (error) {
-        
+        console.log(error)
     }
 }
 
-module.exports = { request_loan }
+module.exports = { request_loan, accept_loan }

@@ -22,4 +22,12 @@ const verify_integer = (number) => {
     return array.length === 1
 }
 
-module.exports = { verify_string, verify_email, verify_number, right_number, verify_integer }
+const next_month = (today) => {
+	let dd = String(today.getDate()).padStart(2, '0');
+	let mm = String(today.getMonth() + 2).padStart(2, '0'); //janvier = 0
+	let yyyy = today.getFullYear();
+	return `${yyyy}-${mm}-${dd}`; 
+}
+
+
+module.exports = { verify_string, verify_email, verify_number, right_number, verify_integer, next_month }

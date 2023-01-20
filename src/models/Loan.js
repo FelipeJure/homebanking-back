@@ -24,17 +24,16 @@ module.exports = (sequelize) => {
         /* cada estado tiene su caracteristica:
             under review: es cuando el usuario solicita un prestamo y debe ser revisado y aceptado por el banco,
             accepted: cuando el banco acepta el prestamo,
-            in process: cuando esta en espera a ser transferido el dinero al usuario,
             completed: cuando el usuario recibio el ingreso del prestamo,
             cancelled: puede ser cuando el usuario paga todas las cuotas del prestamo, o cuando esta under review y se arrepiente del prestamo.
         */
         status: {
-            type: DataTypes.ENUM(['under review', 'accepted','in process', 'completed', 'cancelled']),
+            type: DataTypes.ENUM(['under review', 'accepted', 'completed', 'cancelled']),
             defaultValue: 'under review'
         },
-        // collect es un array de fechas en las que debe pagar cada cuota
+        // collect es la fecha en las que debe pagar cada cuota
         collect: {
-            type: DataTypes.ARRAY(DataTypes.DATE)
+            type: DataTypes.DATEONLY
         },
         // totalDue es un valor virtual (no se guarda en la base de datos)
         // donde se obtiene el total a pagar con la tasa de interes.
@@ -54,6 +53,16 @@ module.exports = (sequelize) => {
                 return right_number(installment);
             },
         },
+        paid: {
+            type: DataTypes.FLOAT,
+            defaultValue: 0
+        },
+        rest: {
+            type: DataTypes.VIRTUAL,
+            get() {
+                return this.totalDue - this.paid
+            }
+        }
     },
     { 
         timestamps: true,

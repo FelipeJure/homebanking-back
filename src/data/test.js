@@ -24,11 +24,11 @@ const add_to_DB = async () => {
     });
     await Bank_account.create({
         type: "saving_account",
-        amount: 43,
+        amount: 43.56,
         userId:1
     })
     await Loan.create({
-        amount: 3455,
+        amount: 1000,
         period: 24,
         interest: 15.66,
         status: "under review",
