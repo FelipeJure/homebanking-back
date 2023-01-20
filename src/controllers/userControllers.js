@@ -1,4 +1,5 @@
 const { User } = require ('../db.js');
+const { Op } = require("sequelize");
 const { verify_string, verify_email } = require ('./helpers.js')
 
 
@@ -32,6 +33,16 @@ const create_user = async (req, res, next) => {
         if(!every_strings) return res.status(404).send({message: 'Error en el formato de los datos, solo acepta string y debe enviar todos los datos'})
         const true_email = verify_email(email)
         if(!true_email) return res.status(404).send({message: 'Debe enviar un email valido'})
+
+        // verifica que no haya ningun usuario con ese email o identity, si existe, devuelve un error
+        const existentUser = await User.findOne({
+            where:{
+                [Op.or]: [{email}, {identity}]
+            }
+        })
+        if(existentUser) {
+            return res.status(404).send({message: 'Email o DNI ya ingresado en base de datos'})
+        }
         const user = await User.create({
             identity, 
             name,

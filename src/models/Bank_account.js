@@ -15,6 +15,10 @@ module.exports = (sequelize) => {
         amount: {
             type: DataTypes.NUMERIC(10,2),
             defaultValue: 0
+        },
+        status: {
+            type: DataTypes.ENUM('active', 'deleted'),
+            defaultValue: 'active'
         }
     },
     { 

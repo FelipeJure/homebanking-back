@@ -10,7 +10,7 @@ router.get('/getUser/:email', get_user)
 router.post('/create',create_user)
 
 // modificar datos de usuario (solo permitido address y telephone)
-router.post('/update', update_user)
+router.put('/update', update_user)
 
 
 module.exports = router;

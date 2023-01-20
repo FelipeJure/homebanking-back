@@ -24,6 +24,7 @@ Esta tabla cuenta con:
 - tipo de cuenta (la cual solo da la opcion de cuenta corriente o caja de ahorros), 
 - un monto (que es la cantidad de dinero que dispone esa cuenta, representada en numeros con 2 decimales), 
 - IBAN (que es una clave unica que identifica al banco y a la cuenta, que en esta base de datos va a ser un numero autoincremental pero deberia ser un IBAN valido para el pais)
+- estado (la cual puede ser active o deleted, lo cual se va a utilizar para el borrado logico en caso que se quiera eliminar una cuenta bancaria)
 - fecha de creada.
 - foreign key (FK) correspondiente al id del usuario a la cual va a estar relacionada esa cuenta.
 En cuanto a las relaciones, la cuenta bancaria va a presentar una relacion de uno a muchos con las siguientes tablas:
@@ -67,3 +68,5 @@ Modificar el usuario: para esto se manda un POST a la ruta /user/update, se pasa
 ## Cuentas bancarias
 
 Obtener datos de todas las cuentas bancarias asociadas a un usuario: para esto se manda un GET a la ruta /account/getAccounts/:id, donde se pasa el id del usuario por params.
+Crear una cuenta bancaria: se manda un POST a la ruta /account/create, pasando por body el tipo de cuenta que puede ser current_account o saving_account y el id del usuario. El resto de valores como el IBAN y el monto se agregan por default
+Eliminar una cuenta: se manda un DELETE a la ruta /account/delete/:accountId pasando por params el id de la cuenta que se quiere eliminar. Se realiza el borrado logico, lo cual evita que el usuario pueda volver a acceder a la cuenta pero la misma queda almacenada en la base de datos, modificando su estado de 'active' a 'deleted'.
