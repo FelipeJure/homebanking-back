@@ -63,3 +63,7 @@ Obtener datos del usuario: para esto se manda un GET a la ruta /user/getUser/:em
 Crear un usuario: para esto se manda un POST la ruta /user/create, donde se va a pasar por body los datos necesarios para crear un usuario que son name, last_name, address, email, telephone, birth_date, password y el DNI/NIE que seria identity.
 Esta ruta devuelve el mensaje de "Usuario creado con exito" o de "El usuario que intentas crear ya existe" en el caso que ya exista un usuario con ese identity ya que es el campo que se comprueba.
 Modificar el usuario: para esto se manda un POST a la ruta /user/update, se pasan por body los datos a modificar y la identity y solo permite modificar la direccion y el numero de telefono.
+
+## Cuentas bancarias
+
+Obtener datos de todas las cuentas bancarias asociadas a un usuario: para esto se manda un GET a la ruta /account/getAccounts/:id, donde se pasa el id del usuario por params.
