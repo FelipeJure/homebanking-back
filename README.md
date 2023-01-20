@@ -58,15 +58,29 @@ Aqui se puede ver el diagrama de la base de datos
 
 Hay rutas para las diferentes tablas.
 
-## Usuarios
+### Usuarios
 
 Obtener datos del usuario: para esto se manda un GET a la ruta /user/getUser/:email, donde se manda el email por params y se obtienen los datos del usuario.
 Crear un usuario: para esto se manda un POST la ruta /user/create, donde se va a pasar por body los datos necesarios para crear un usuario que son name, last_name, address, email, telephone, birth_date, password y el DNI/NIE que seria identity.
 Esta ruta devuelve el mensaje de "Usuario creado con exito" o de "El usuario que intentas crear ya existe" en el caso que ya exista un usuario con ese identity ya que es el campo que se comprueba.
 Modificar el usuario: para esto se manda un POST a la ruta /user/update, se pasan por body los datos a modificar y la identity y solo permite modificar la direccion y el numero de telefono.
 
-## Cuentas bancarias
+### Cuentas bancarias
 
 Obtener datos de todas las cuentas bancarias asociadas a un usuario: para esto se manda un GET a la ruta /account/getAccounts/:id, donde se pasa el id del usuario por params.
 Crear una cuenta bancaria: se manda un POST a la ruta /account/create, pasando por body el tipo de cuenta que puede ser current_account o saving_account y el id del usuario. El resto de valores como el IBAN y el monto se agregan por default
 Eliminar una cuenta: se manda un DELETE a la ruta /account/delete/:accountId pasando por params el id de la cuenta que se quiere eliminar. Se realiza el borrado logico, lo cual evita que el usuario pueda volver a acceder a la cuenta pero la misma queda almacenada en la base de datos, modificando su estado de 'active' a 'deleted'.
+
+### Prestamo
+
+Solicitar un prestamo: se manda un POST a la ruta /loan/request y se envia por body el monto, periodo, tasa de interes, id del usuario y el id de la cuenta bancaria a la que se va a depositar ese dinero. Devuelve el prestamo, en estado 'under review', por lo que el administrador debe aceptar el prestamo para que se efectivice.
+
+Cancerlar un prestamo: se manda un PUT a la ruta /loan/cancel/:loanId y se envia por params el id del prestamo que se desea cancelar. Si el estado del prestamo es 'under review', el prestamo se puede cancelar, cambiando el estado a 'canceled'. En cambio, si el estado ya dejo de ser 'under review', el prestamo no puede cancelarse ya que fue depositado el dinero en la cuenta del usuario.
+
+Aceptar un prestamo: se manda un PUT a la ruta /loan/accept/:loanId y se efectiviza el prestamo por lo que el estado del prestamo pasa a 'accepted', se acredita el dinero en la cuenta del usuario y se determina la fecha de comienzo del pago del prestamo (1 mes posterior a la acreditacion del mismo).
+Para que esta ruta sea viable, debe haber una propiedad del usuario que determine que es administrador para poder acceder a esta ruta, evitandola en cualquier otro usuario.
+No hice esto por falta de tiempo.
+
+### Historial de pago
+
+Solicitar el historial de pago: se manda un GET a la ruta /payment/get_payments/:userId, donde se envia por params el id del usuario, devolviendo todos los pagos asociados a ese usuario.
