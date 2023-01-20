@@ -3,7 +3,7 @@ const { User, Loan, Bank_account, Payment_history } = require ('../db.js')
 const user = {
     name: "Felipe", 
     last_name:"Jure", 
-    birth_date:"1992-04-03", 
+    birth_date:"01/05/2000", 
     email:"felipe@gmail.com", 
     telephone:"+393295903", 
     address:"Victor 3214", 
