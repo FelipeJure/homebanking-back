@@ -4,7 +4,7 @@ const router = Router();
 
 
 // obtener datos del usuario
-router.get('/getUser', get_user)
+router.get('/getUser/:email', get_user)
 
 // crear un nuevo usuario, se pasan los datos por body
 router.post('/create',create_user)
