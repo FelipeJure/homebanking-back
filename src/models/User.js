@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+const md5 = require('md5');
 
 module.exports = (sequelize) => {
     sequelize.define('user', {
@@ -18,6 +19,9 @@ module.exports = (sequelize) => {
         // el password deberia venir de la libreria bcrypt como token
         password: {
             type: DataTypes.STRING,
+            set(value) {
+                this.setDataValue('password', md5(value));
+            },
             allowNull: false,
         },
         identity: {

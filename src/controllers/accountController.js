@@ -7,7 +7,7 @@ const { Bank_account } = require ('../db.js');
 const getAccounts = async (req, res) => {
     try{
         const { userId } = req.params
-        if(!userId) return res.status(404).send({message: 'You have to send the userId'})
+        if(!userId) return res.status(400).send({message: 'You have to send the userId'})
         const accounts = await Bank_account.findAll({
             where:{
                 userId
@@ -29,8 +29,8 @@ const getAccounts = async (req, res) => {
 const createAccount = async (req, res, next) => {
     try{
         const { type, id } = req.body
-        if(!id) return res.status(404).send({message: 'You have to send the userId'})
-        if(type !== 'current_account' && type !== 'saving_account') return res.status(404).send({message: 'Invalid account'})
+        if(!id) return res.status(400).send({message: 'You have to send the userId'})
+        if(type !== 'current_account' && type !== 'saving_account') return res.status(400).send({message: 'Invalid account'})
         const account = await Bank_account.create({
                 type,
                 userId: id
@@ -47,7 +47,7 @@ const createAccount = async (req, res, next) => {
 const deleteAccount = async (req,res) => {
     try{
         const id  = req.params.accountId
-        if(!id) return res.status(404).send({message: 'You have to send the accountId'})
+        if(!id) return res.status(400).send({message: 'You have to send the accountId'})
         const account = await Bank_account.findByPk(id);
         if(!account) return res.status(404).send({message: 'Account not found'})
         account.status = 'deleted'

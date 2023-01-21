@@ -56,14 +56,19 @@ Aqui se puede ver el diagrama de la base de datos
 
 ## Rutas
 
-Hay rutas para las diferentes tablas.
+A continuacion se detallaran las diferentes rutas.
+
+### Autenticacion
+
+Registro: se manda un POST a la ruta /auth/register, donde se crea el registro de un usuario, recibiendo por body name, last_name, email, password, identity (DNI/NIE), telephone, birth_date y address. Se hashea la contraseña y se almacena en la base de datos. Devuelve el user con todos los datos personales, excepto la contraseña.
+Login: se manda por POST a la ruta /auth/login, donde se recibe por body el email y la contraseña y se los compara con los de la base de datos, si hay coincidencias, se genera un token, el cual se devuelve y es el que va a ser requerido en cada solicitud a la API.
+El token expira a los 30 minutos y contiene el id del usuario
+
 
 ### Usuarios
 
-Obtener datos del usuario: para esto se manda un GET a la ruta /user/getUser/:email, donde se manda el email por params y se obtienen los datos del usuario.
-Crear un usuario: para esto se manda un POST la ruta /user/create, donde se va a pasar por body los datos necesarios para crear un usuario que son name, last_name, address, email, telephone, birth_date, password y el DNI/NIE que seria identity.
-Esta ruta devuelve el mensaje de "Usuario creado con exito" o de "El usuario que intentas crear ya existe" en el caso que ya exista un usuario con ese identity ya que es el campo que se comprueba.
-Modificar el usuario: para esto se manda un POST a la ruta /user/update, se pasan por body los datos a modificar y la identity y solo permite modificar la direccion y el numero de telefono.
+Obtener datos del usuario: para esto se manda un GET a la ruta /user/getUser, donde se manda el id del usuario por el token y se obtienen los datos en la base de datos.
+Modificar el usuario: para esto se manda un POST a la ruta /user/update, se pasan por body los datos a modificar y el id del usuario por el token. Solo permite modificar la direccion y el numero de telefono.
 
 ### Cuentas bancarias
 

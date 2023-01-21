@@ -1,21 +1,25 @@
 const { Router } = require('express');
+const authenticationRoute = require('./authenticationRoute');
 const userRoute = require('./userRoute');
 const accountRoute = require('./accountRoute');
 const loanRoute = require('./loanRoute');
-const paymentRoute = require('./paymentRoute')
+const paymentRoute = require('./paymentRoute');
+const { validateToken } = require('../services/token');
 
 const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-// 
-router.use('/user', userRoute);
+router.use('/auth', authenticationRoute)
 
-router.use('/account', accountRoute);
+router.use('/user',validateToken, userRoute);
 
-router.use('/loan', loanRoute);
+router.use('/account',validateToken, accountRoute);
 
-router.use('/payment', paymentRoute)
+router.use('/loan',validateToken, loanRoute);
+
+router.use('/payment',validateToken, paymentRoute)
+
 
 module.exports = router;

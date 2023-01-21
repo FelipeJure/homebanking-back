@@ -8,13 +8,13 @@ const request_loan = async (req,res) => {
         const { amount, period, interest, userId, bankAccountId } = req.body
         
         const allInformation = [amount, period, interest, userId, bankAccountId].every(value => value !== undefined)
-        if(!allInformation) return res.status(404).send({message: 'You miss information'})
+        if(!allInformation) return res.status(400).send({message: 'You miss information'})
         
         const allNumbers = verify_number(amount, period, interest, userId, bankAccountId)
-        if(!allNumbers) return res.status(404).send({message: 'Fields must be all numeric'})
+        if(!allNumbers) return res.status(400).send({message: 'Fields must be all numeric'})
         
         const integers = verify_integer(amount, period)
-        if(!integers) return res.status(404).send({message: 'Amount and period must be whole numbers'})
+        if(!integers) return res.status(400).send({message: 'Amount and period must be whole numbers'})
                 
         const user = await User.findByPk(userId)
         if(!user) return res.status(404).send({message: 'Invalid User'})
@@ -40,7 +40,7 @@ const request_loan = async (req,res) => {
 const cancel_loan = async (req, res) => {
     try {
         const id = req.params.loanId
-        if(!id) return res.status(404).send({message: "You have to send the load's id"})
+        if(!id) return res.status(400).send({message: "You have to send the load's id"})
         const found_loan = await Loan.findByPk(id)
         if(!found_loan) return res.status(404).send({message: "This load doesn't exist"})
         if(found_loan.status === 'under review') {
@@ -48,7 +48,7 @@ const cancel_loan = async (req, res) => {
             await found_loan.save()
             return res.status(200).send({message: 'Your loan be canceled saccesfully'})
         }
-        return res.status(404).send({message: "You can't cancel this load"})
+        return res.status(401).send({message: "You can't cancel this load"})
 
     }
     catch (error) {
@@ -63,7 +63,7 @@ const accept_loan = async (req, res) => {
         en esta funcion 
     */
         const id = req.params.loanId
-        if(!id) return res.status(404).send({message: "You have to send the load's id"})
+        if(!id) return res.status(400).send({message: "You have to send the load's id"})
         const found_loan = await Loan.findByPk(id)
         if(!found_loan) return res.status(404).send({message: "This load doesn't exist"})
         const today = new Date()
