@@ -67,4 +67,25 @@ const register = async (req, res, next) => {
     }
 }
 
-module.exports = { login, register }
+const recover_password = async (req, res) => {
+    try{
+        const email = req.body
+        if (!email) return res.sendStatus(401)
+
+        const user = User.findOne({
+            where: {
+                email
+            }
+        })
+        if(!user) return res.status(404).send({message: 'Invalid email'})
+
+        const token = generateToken({userId:user.id})
+
+        const recover_link = `http://localhost:3001/auth/recover_password/${token}`
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
+
+module.exports = { login, register, recover_password }
