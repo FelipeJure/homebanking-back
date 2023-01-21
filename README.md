@@ -52,7 +52,7 @@ Esta tabla cuenta con:
 - FK correspondiente al id del usuario que realiza el pago.
 
 Aqui se puede ver el diagrama de la base de datos
-![Banner](/homebanking-back/images/Diagrama%20base%20de%20datos.drawio.png)
+<img src= "./images/diagram.png" alt="diagrama de base de datos">
 
 ## Rutas
 
