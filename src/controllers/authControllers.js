@@ -67,6 +67,7 @@ const register = async (req, res, next) => {
     }
 }
 
+// TO DO
 const recover_password = async (req, res) => {
     try{
         const email = req.body
