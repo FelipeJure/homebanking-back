@@ -8,6 +8,11 @@ const verify_email = (email) => {
     return is_email !== null
 }
 
+const validate_password = (password) => {
+    const reg_exp = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,12}$/
+    return reg_exp.test(password)
+}
+
 const verify_number = (...number) => {
     return [...number].every(value => typeof value === 'number')
 }
@@ -30,4 +35,4 @@ const next_month = (today) => {
 }
 
 
-module.exports = { verify_string, verify_email, verify_number, right_number, verify_integer, next_month }
+module.exports = { verify_string, verify_email, validate_password, verify_number, right_number, verify_integer, next_month }

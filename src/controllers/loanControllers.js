@@ -64,13 +64,18 @@ const accept_loan = async (req, res) => {
     */
         const id = req.params.loanId
         if(!id) return res.status(400).send({message: "You have to send the load's id"})
-        const found_loan = await Loan.findByPk(id)
+        const found_loan = await Loan.findOne({
+            where: {
+                id,
+                status: 'under review'
+            }
+            })
         if(!found_loan) return res.status(404).send({message: "This load doesn't exist"})
         const today = new Date()
         found_loan.status = 'accepted';
-        found_loan.collect = next_month(today)
+        found_loan.accepted = today.toISOString().slice(0, 10)
+        found_loan.collect = next_month(today);
         await found_loan.save()
-        console.log(found_loan.collect)
         const account = await Bank_account.findByPk(found_loan.bankAccountId)
         account.amount = account.amount - (-found_loan.amount)
         await account.save()

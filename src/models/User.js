@@ -16,13 +16,16 @@ module.exports = (sequelize) => {
             allowNull: false,
             unique: true
         },
-        // el password deberia venir de la libreria bcrypt como token
         password: {
             type: DataTypes.STRING,
             set(value) {
                 this.setDataValue('password', md5(value));
             },
             allowNull: false,
+        },
+        role: {
+            type: DataTypes.ENUM('admin', 'client'),
+            defaultValue: 'client'
         },
         identity: {
             type: DataTypes.STRING,

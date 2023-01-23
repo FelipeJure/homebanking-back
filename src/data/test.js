@@ -8,7 +8,8 @@ const user = {
     telephone:"+393295903", 
     address:"Victor 3214", 
     identity: "felipito", 
-    password: 'chicha'
+    password: 'chicha',
+    role: 'admin'
 }
 
 const payments = [

@@ -5,7 +5,6 @@ const { verify_string } = require ('./helpers.js')
 const get_user = async (req,res) => {
     try{
         const id = req.userId
-        console.log(id)
         if(!id) return res.status(400).send({message: 'You have to send an id'})
 
         const user = await User.findByPk(id)
@@ -31,7 +30,7 @@ const update_user = async (req, res, next) => {
         /* 
         si encuentra el usuario, verifica que cada propiedad fue enviada y de ser asi,
         modifica esa respectiva propiedad del usuario pero si no lo encuentra envia un 
-        error 404 con un mensaje que dice "El usuario no existe, verifica los datos enviados"*/
+        error 404 con un mensaje que dice "El usuario no existe, verifica los datos enviados" */
         if(user){
             if(telephone) user.telephone = telephone
             if(address) user.address = address

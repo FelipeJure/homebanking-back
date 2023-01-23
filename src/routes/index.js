@@ -4,7 +4,7 @@ const userRoute = require('./userRoute');
 const accountRoute = require('./accountRoute');
 const loanRoute = require('./loanRoute');
 const paymentRoute = require('./paymentRoute');
-const { validateToken } = require('../services/token');
+const { validateToken } = require('../middlewares/token');
 
 const router = Router();
 

@@ -62,7 +62,10 @@ A continuacion se detallaran las diferentes rutas.
 
 Registro: se manda un POST a la ruta /auth/register, donde se crea el registro de un usuario, recibiendo por body name, last_name, email, password, identity (DNI/NIE), telephone, birth_date y address. Se hashea la contraseña y se almacena en la base de datos. Devuelve el user con todos los datos personales, excepto la contraseña.
 Login: se manda por POST a la ruta /auth/login, donde se recibe por body el email y la contraseña y se los compara con los de la base de datos, si hay coincidencias, se genera un token, el cual se devuelve y es el que va a ser requerido en cada solicitud a la API.
-El token expira a los 30 minutos y contiene el id del usuario
+El token expira a los 30 minutos y contiene el id del usuario.
+Olvido de contraseña: se manda un POST a la ruta /auth/forgot_password con el email por body, se verifica que el usuario exista con ese email y se genera un token, el cual se manda por correo al email recibido. El usuario recibe un link el cual tiene una ruta (que debe ser diseñada por el front), donde recibe el token por params.
+Crear nueva contraseña: se manda un PUT a la ruta /auth/new_password, donde se recibe la nueva constraseña por body y el token por headers. Se modifica la contraseña en la base de datos y se envia un mensaje de confirmacion de cambio de contraseña.
+Cambio de contraseña: se manda un PUT a la ruta /auth/change_password, donde se verifica el token recibido por headers y se recibe la contraseña actual y la nueva contraseña. Se verifica la actual en la base de datos y si es correcta, se modifica por la nueva contraseña.
 
 
 ### Usuarios
